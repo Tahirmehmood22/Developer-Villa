@@ -93,22 +93,22 @@ function toggleDoor() {
 function showPopup(message) {
     const popup = document.getElementById('infoPopup');
     const popupText = document.getElementById('popupText');
-    
     popupText.textContent = message;
     popup.style.display = 'block';
+    popup.style.opacity = '1'; // Ensure visible
     console.log('Popup shown:', message);
-    
-    // Auto-close after 8 seconds in VR mode for better UX
-    if (isVRMode) {
-        setTimeout(() => {
-            closePopup();
-        }, 8000);
-    }
+    // Auto-close after 5 seconds for all modes
+    setTimeout(() => {
+        closePopup();
+    }, 5000);
 }
 
 function closePopup() {
     const popup = document.getElementById('infoPopup');
-    popup.style.display = 'none';
+    popup.style.opacity = '0'; // Fade out
+    setTimeout(() => {
+        popup.style.display = 'none';
+    }, 300); // Wait for fade-out animation
     console.log('Popup closed');
 }
 
@@ -291,3 +291,8 @@ setTimeout(() => {
     document.getElementById('loading').style.display = 'none';
     console.log('Loading complete');
 }, 2000);
+
+// Attach click handler for all clickable objects in the scene
+if (document.querySelector('a-scene')) {
+  document.querySelector('a-scene').addEventListener('click', handleObjectClick);
+}
