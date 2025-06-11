@@ -174,23 +174,23 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Enhanced Info Popup */
 .info-popup {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 20%;
+    right: 3%;
     z-index: 2000;
-    background: rgba(0, 0, 0, 0.95);
-    border-radius: 15px;
+    background: rgba(0, 0, 0, 0.8); /* More transparent */
+    border-radius: 12px;
     padding: 0;
     border: 2px solid #00ff7f;
-    box-shadow: 0 20px 60px rgba(0, 255, 127, 0.3);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 255, 127, 0.3);
+    backdrop-filter: blur(8px);
     animation: popupFadeIn 0.3s ease-out;
-    max-width: 90vw;
+    max-width: 300px;
     max-height: 80vh;
+    transform: none; /* Important: no center translate */
 }
+
 
 @keyframes popupFadeIn {
     from {

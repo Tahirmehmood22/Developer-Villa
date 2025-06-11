@@ -66,12 +66,18 @@ function toggleDoor() {
         // Open door - realistic swing with pivot point on the left side
         door.setAttribute('animation', 'property: rotation; to: 0 -85 0; dur: 2000; easing: easeInOutQuad');
         door.setAttribute('animation__move', 'property: position; to: 0.6 1.5 -5.2; dur: 2000; easing: easeInOutQuad');
+        // Move camera back
+        document.querySelector('#cameraRig').setAttribute('animation__camback', 'property: position; to: 0 1.6 6; dur: 1500; easing: easeInOutQuad');
+
         console.log('Door opened!');
         showPopup('🚪 Welcome to the Developer Villa!\n\nStep through this door to begin your journey into web development. Each room represents a skill you\'ll master at Hyper Island - from HTML foundations to advanced React development.');
     } else {
         // Close door
         door.setAttribute('animation', 'property: rotation; to: 0 0 0; dur: 2000; easing: easeInOutQuad');
         door.setAttribute('animation__move', 'property: position; to: 0 1.5 -5.8; dur: 2000; easing: easeInOutQuad');
+        // Reset camera forward
+        document.querySelector('#cameraRig').setAttribute('animation__camback', 'property: position; to: 0 1.6 3; dur: 1500; easing: easeInOutQuad');
+
         console.log('Door closed!');
     }
 }
