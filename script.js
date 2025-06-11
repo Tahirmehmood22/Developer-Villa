@@ -15,16 +15,22 @@ let isDoorOpen = false;
 let isVRMode = false;
 
 function updateScene() {
-    // Hide all scenes
-    for (let i = 0; i < scenes.length; i++) {
+    // Hide all scenes except scene0 and builder (builder always visible)
+    for (let i = 1; i < scenes.length; i++) {
         const sceneEl = document.querySelector(`#scene${i}`);
         if (sceneEl) {
             sceneEl.setAttribute('visible', false);
         }
     }
 
-    // Show scenes up to current scene
-    for (let i = 0; i <= currentScene; i++) {
+    // Welcome board (scene0) always visible
+    const welcomeEl = document.querySelector('#scene0');
+    if (welcomeEl) {
+        welcomeEl.setAttribute('visible', true);
+    }
+
+    // Show scenes up to currentScene
+    for (let i = 1; i <= currentScene; i++) {
         const sceneEl = document.querySelector(`#scene${i}`);
         if (sceneEl) {
             sceneEl.setAttribute('visible', true);
@@ -32,12 +38,13 @@ function updateScene() {
     }
 
     // Update UI
-    document.getElementById('sceneInfo').textContent = 
+    document.getElementById('sceneInfo').textContent =
         `${scenes[currentScene].name} (${currentScene + 1}/${scenes.length})`;
-    
+
     document.getElementById('prevBtn').disabled = currentScene === 0;
     document.getElementById('nextBtn').disabled = currentScene === scenes.length - 1;
 }
+
 
 function nextScene() {
     if (currentScene < scenes.length - 1) {
