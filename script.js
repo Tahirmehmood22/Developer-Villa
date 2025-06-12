@@ -130,6 +130,7 @@ function handleObjectClick(event) {
 // Enhanced VR mode detection and controls
 function setupVRTriggers() {
     const sceneEl = document.querySelector('a-scene');
+    const vrInstructions = document.getElementById('vr-instructions');
     
     // Check VR mode status more frequently for better responsiveness
     setInterval(() => {
@@ -140,8 +141,10 @@ function setupVRTriggers() {
             console.log('Entered VR mode - Enhanced triggers activated');
             enhanceVRInteraction();
             setupVRControllers();
+            if (vrInstructions) vrInstructions.setAttribute('visible', true);
         } else if (!isVRMode && wasVRMode) {
             console.log('Exited VR mode');
+            if (vrInstructions) vrInstructions.setAttribute('visible', false);
         }
     }, 100);
 }
@@ -158,6 +161,9 @@ function enhanceVRInteraction() {
             element.setAttribute('animation__glow', 'property: material.emissiveIntensity; to: 0.8; dur: 1000; dir: alternate; loop: true');
         }
     });
+    // Also toggle VR instructions
+    const vrInstructions = document.getElementById('vr-instructions');
+    if (vrInstructions) vrInstructions.setAttribute('visible', isVRMode);
 }
 
 function setupVRControllers() {
