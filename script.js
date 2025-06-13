@@ -112,14 +112,30 @@ function closePopup() {
     console.log('Popup closed');
 }
 
+function playTreeSound() {
+    const treeSound = document.querySelector('#tree-sound-entity');
+    if (treeSound && treeSound.components && treeSound.components.sound) {
+        treeSound.components.sound.stopSound();
+        treeSound.components.sound.playSound();
+    }
+}
+
 // Enhanced object click handling
 function handleObjectClick(event) {
     const target = event.target;
     console.log('Object clicked:', target.id, target.className);
-    
     if (target.id === 'villa-door') {
+        const clickSound = document.querySelector('#click-sound-entity');
+        if (clickSound && clickSound.components && clickSound.components.sound) {
+            clickSound.components.sound.stopSound();
+            clickSound.components.sound.playSound();
+            console.log('Playing door click sound.');
+        } else {
+            console.warn('Click sound entity or component not ready.');
+        }
         toggleDoor();
     } else if (target.id === 'tree-plaque') {
+        playTreeSound();
         showPopup('🌳 Project Tree of Growth\n\nThis tree represents your portfolio development! Each fruit symbolizes a project you\'ll create:\n\n🍎 HTML/CSS Static Sites\n🍊 JavaScript Interactive Apps\n🍇 React Components & SPAs\n🍌 Full-Stack Applications\n🥝 Advanced Frameworks\n\nWatch your skills grow with each project!');
     } else if (target.classList.contains('clickable')) {
         // Generic clickable object
@@ -286,6 +302,7 @@ document.addEventListener('keydown', function(event) {
         // Tree interaction shortcut
         const treePlaque = document.querySelector('#tree-plaque');
         if (treePlaque) {
+            playTreeSound();
             handleObjectClick({ target: treePlaque });
         }
     }

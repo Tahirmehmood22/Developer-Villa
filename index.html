@@ -51,6 +51,8 @@
 
     <a-assets>
       <img id="scenicBackground" src="assets/scenic-view.png" crossorigin="anonymous"/>
+      <audio id="clickSound" src="assets/click.mp3" preload="auto"></audio>
+      <audio id="treeSound" src="assets/treesound.mp3" preload="auto"></audio>
     </a-assets>
 
     <a-sky src="#scenicBackground" rotation="0 -90 0" radius="5000"
@@ -85,7 +87,7 @@
         <!-- SCENE 0: Welcome Board - fixed position left -->
     <a-entity id="scene0">
       <a-box position="-15 3 -8" width="7" height="3" depth="0.3" color="#8B4513" shadow="cast: true"></a-box>
-      <a-box position="-15 3 -7.9" width="6.5" height="2.5" depth="0.1" color="#FFFFFF"></a-box>
+      <a-box position="-15 3 -7.88" width="6.5" height="2.5" depth="0.1" color="#FFFFFF"></a-box>
       <a-text position="-15 3 -7.8"
               value="🎓 HYPER ISLAND\nJOURNEY BEGINS\n\n🏗️ DEVELOPER VILLA\nBuilding Skills into Architecture"
               align="center" color="#000000" width="5.5"></a-text>
@@ -115,55 +117,33 @@
 
     <!-- SCENE 2: CSS Walls with door fix -->
 <a-entity id="scene2" visible="false">
-  <!-- Left Wall -->
-  <a-box position="-6 2 -12" width="0.5" height="6" depth="12" color="#1D4ED8"
-         shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
-  <!-- Right Wall -->
-  <a-box position="6 2 -12" width="0.5" height="6" depth="12" color="#1D4ED8"
-         shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
-  <!-- Back Wall -->
-  <a-box position="0 2 -18" width="12" height="6" depth="0.5" color="#1E40AF"
-         shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
-  <!-- Front Wall - Left (aligned with base) -->
-  <a-box position="-3.4 2.2 -6.1" width="5.2" height="6" depth="0.5" color="#1E40AF"
-         shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
-  <!-- Front Wall - Right (aligned with base) -->
-  <a-box position="3.4 2.2 -6.1" width="5.2" height="6" depth="0.5" color="#1E40AF"
-         shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
-  <!-- Front Wall - Top (overlap, aligned with new wall) -->
-  <a-box position="0 3.2 -6.1" width="1.6" height="2.6" depth="0.5" color="#1E40AF"
-         shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
-  <!-- Door Frame (aligned with new wall) -->
-  <a-box position="0 1.7 -6" width="1.62" height="3.35" depth="0.4" color="#8B4513" shadow="cast: true"></a-box>
-
-  <!-- Door (aligned with new wall) -->
-  <a-box id="villa-door" position="0 1.7 -5.95"
-         width="1.62" height="3.35" depth="0.15" color="#654321"
-         shadow="cast: true"
-         material="emissive:#FFD700;emissiveIntensity:0.3"
-         class="clickable"
-         animation__glow="property:material.emissiveIntensity;to:0.8;dur:1000;dir:alternate;loop:true"></a-box>
-
-  <!-- Door handle -->
-  <a-sphere position="0.7 1.5 -5.9" radius="0.04" color="#FFD700" shadow="cast: true"></a-sphere>
-
-  <!-- Door Window -->
-  <a-box position="0 2.2 -6.01" width="0.5" height="0.3" depth="0.03" color="#87CEEB" opacity="0.8"
-         material="emissive:#87CEEB;emissiveIntensity:0.3"></a-box>
+  <!-- Left Wall (precise overlap) -->
+  <a-box position="-6 2 -12" width="0.5" height="6" depth="12.1" color="#1E40AF" shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
+  <!-- Right Wall (precise overlap) -->
+  <a-box position="6 2 -12" width="0.5" height="6" depth="12.1" color="#1E40AF" shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
+  <!-- Back Wall (precise overlap) -->
+  <a-box position="0 2 -18" width="12.1" height="6" depth="0.5" color="#1E40AF" shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
+  <!-- Front Wall - Left of Door (precise fit) -->
+  <a-box position="-3.65 2 -6" width="5.5" height="6" depth="0.5" color="#1E40AF" shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
+  <!-- Front Wall - Right of Door (precise fit) -->
+  <a-box position="3.65 2 -6" width="5.5" height="6" depth="0.5" color="#1E40AF" shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
+  <!-- Front Wall - Top above Door (precise fit) -->
+  <a-box position="0 4.15 -6" width="1.8" height="1.7" depth="0.5" color="#1E40AF" shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
+  <!-- Door Frame (precise fit, slightly in front) -->
+  <a-box position="0 1.7 -5.99" width="1.8" height="3.3" depth="0.2" color="#8B4513" shadow="cast: true"></a-box>
+  <!-- Door (precise fit, slightly in front of frame) -->
+  <a-box id="villa-door" position="0 1.7 -5.95" width="1.7" height="3.1" depth="0.1" color="#654321" shadow="cast: true" material="emissive:#FFD700;emissiveIntensity:0.3" class="clickable" animation__glow="property:material.emissiveIntensity;to:0.8;dur:1000;dir:alternate;loop:true"></a-box>
+  <!-- Door handle (adjusted position) -->
+  <a-sphere position="0.7 1.7 -5.9" radius="0.04" color="#FFD700" shadow="cast: true"></a-sphere>
+  <!-- Door Window (adjusted position) -->
+  <a-box position="0 2.2 -6.01" width="0.5" height="0.3" depth="0.03" color="#87CEEB" opacity="0.8" material="emissive:#87CEEB;emissiveIntensity:0.3"></a-box>
   <!-- Light -->
   <a-light type="point" position="0 2 -5" color="#FFD700" intensity="1.2"></a-light>
-
   <!-- Interior floor -->
-  <a-plane position="0 -0.8 -12" rotation="-90 0 0" width="11" height="11" color="#8B4513"
-           material="metalness:0.2;roughness:0.8"></a-plane>
-
-  <!-- Blue step panel below door → blends with front wall -->
-<a-box position="0 -0.4 -5.9" width="3" height="0.6" depth="2" color="#1E40AF"
-       shadow="cast: true"
-       material="metalness:0.4;roughness:0.6"></a-box>
-
-  <a-text position="0 6 -12" value="CSS: STRUCTURE & DESIGN\nClick the door to open it!"
-          align="center" color="#DBEAFE" width="10"></a-text>
+  <a-plane position="0 -0.8 -12" rotation="-90 0 0" width="11" height="11" color="#8B4513" material="metalness:0.2;roughness:0.8"></a-plane>
+  <!-- Blue step panel below door -->
+  <a-box position="0 -0.4 -5.9" width="3" height="0.6" depth="2" color="#1E40AF" shadow="cast: true" material="metalness:0.4;roughness:0.6"></a-box>
+  <a-text position="0 6 -12" value="CSS: STRUCTURE & DESIGN\nClick the door to open it!" align="center" color="#DBEAFE" width="10"></a-text>
 </a-entity>
 
 
@@ -186,9 +166,9 @@
               color="#D1FAE5" width="8"></a-text>
     </a-entity>
 
-    <!-- SCENE 5: React Roof -->
+    <!-- SCENE 5: React Roof (wider, deeper, lower) -->
     <a-entity id="scene5" visible="false">
-      <a-box position="0 5.5 -12" width="14" height="0.3" depth="14" color="#06B6D4"
+      <a-box position="0 5.2 -12" width="15" height="0.3" depth="15" color="#06B6D4"
              shadow="cast: true" material="metalness:0.7;roughness:0.3"></a-box>
       <a-sphere position="0 6.8 -12" radius="0.5" color="#22D3EE" shadow="cast: true"
                 material="emissive:#22D3EE;emissiveIntensity:0.3"></a-sphere>
@@ -230,13 +210,14 @@
       <a-plane position="0 -0.4 10" rotation="-90 0 0" width="0.4" height="2" color="#FBBF24"></a-plane>
 
       <!-- Career Board → closest and a little left -->
-      <a-box position="4 1.5 0" width="4" height="1.5" depth="0.3" color="#8B4513" shadow="cast: true"></a-box>
-      <a-box position="4 1.5 0.1" width="3.5" height="1.2" depth="0.1" color="#FFFFFF"></a-box>
-      <a-text position="4 1.5 0.2" value="🚀 CAREER AHEAD\nYour Journey Beyond\nHyper Island"
+      <a-box position="5 1.5 0.5" width="4" height="1.5" depth="0.3" color="#8B4513" shadow="cast: true"></a-box>
+      <a-box position="5 1.5 0.62" width="3.5" height="1.2" depth="0.1" color="#FFFFFF"></a-box>
+      <a-text position="5 1.5 0.7" value="🚀 CAREER AHEAD\nYour Journey Beyond\nHyper Island"
               align="center" color="#000000" width="3"></a-text>
-      <a-cylinder position="2.5 0.5 0" radius="0.12" height="1.2" color="#654321"></a-cylinder>
-      <a-cylinder position="5.5 0.5 0" radius="0.12" height="1.2" color="#654321"></a-cylinder>
-      <a-text position="4 2.5 -1" value="YOUR JOURNEY BEYOND HYPER ISLAND"
+      <!-- Career Board posts fixed -->
+      <a-cylinder position="3.5 0.5 0.5" radius="0.12" height="1.2" color="#654321"></a-cylinder>
+      <a-cylinder position="6.5 0.5 0.5" radius="0.12" height="1.2" color="#654321"></a-cylinder>
+      <a-text position="5 2.5 -1" value="YOUR JOURNEY BEYOND HYPER ISLAND"
               align="center" color="#06B6D4" width="6"></a-text>
     </a-entity>
 
@@ -254,6 +235,12 @@
             outlineWidth="0.08"
             visible="false">
     </a-text>
+
+    <!-- 3D Sound for click -->
+    <a-sound id="click-sound-entity" src="#clickSound" autoplay="false" position="0 2 0" volume="1.0"></a-sound>
+
+    <!-- 3D Sound for tree click (volume increased) -->
+    <a-sound id="tree-sound-entity" src="#treeSound" autoplay="false" position="-14 2 -14" volume="3.0"></a-sound>
 
         <!-- Close your a-scene -->
   </a-scene>
