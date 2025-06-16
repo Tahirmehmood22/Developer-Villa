@@ -53,6 +53,7 @@
       <img id="scenicBackground" src="assets/scenic-view.png" crossorigin="anonymous"/>
       <audio id="clickSound" src="assets/click.mp3" preload="auto"></audio>
       <audio id="treeSound" src="assets/treesound.mp3" preload="auto"></audio>
+      <audio id="backgroundMusic" src="assets/background.mp3" preload="auto" loop="true"></audio>
     </a-assets>
 
     <a-sky src="#scenicBackground" rotation="0 -90 0" radius="5000"
@@ -236,11 +237,14 @@
             visible="false">
     </a-text>
 
-    <!-- 3D Sound for click -->
-    <a-sound id="click-sound-entity" src="#clickSound" autoplay="false" position="0 2 0" volume="1.0"></a-sound>
+    <!-- Background Music (starts from Scene 1) -->
+    <a-sound id="background-music-entity" src="#backgroundMusic" autoplay="false" loop="true" volume="0.3" position="0 0 0"></a-sound>
 
-    <!-- 3D Sound for tree click (volume increased) -->
-    <a-sound id="tree-sound-entity" src="#treeSound" autoplay="false" position="-14 2 -14" volume="3.0"></a-sound>
+    <!-- 3D Sound for click (door sound) -->
+    <a-sound id="click-sound-entity" src="#clickSound" autoplay="false" position="0 2 0" volume="1.0" poolSize="1"></a-sound>
+
+    <!-- 3D Sound for tree click -->
+    <a-sound id="tree-sound-entity" src="#treeSound" autoplay="false" position="-14 2 -14" volume="2.0" poolSize="1"></a-sound>
 
         <!-- Close your a-scene -->
   </a-scene>

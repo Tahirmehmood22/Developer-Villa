@@ -45,12 +45,21 @@ function updateScene() {
     document.getElementById('nextBtn').disabled = currentScene === scenes.length - 1;
 }
 
-
+// Scene navigation
 function nextScene() {
     if (currentScene < scenes.length - 1) {
         currentScene++;
         updateScene();
         console.log('Next scene:', scenes[currentScene].name);
+        
+        // Start background music when reaching Scene 1
+        if (currentScene === 1) {
+            const bgMusic = document.querySelector('#background-music-entity');
+            if (bgMusic && bgMusic.components && bgMusic.components.sound) {
+                bgMusic.components.sound.playSound();
+                console.log('Starting background music from Scene 1');
+            }
+        }
     }
 }
 
@@ -59,6 +68,15 @@ function prevScene() {
         currentScene--;
         updateScene();
         console.log('Previous scene:', scenes[currentScene].name);
+        
+        // Stop background music if going back to Scene 0
+        if (currentScene === 0) {
+            const bgMusic = document.querySelector('#background-music-entity');
+            if (bgMusic && bgMusic.components && bgMusic.components.sound) {
+                bgMusic.components.sound.stopSound();
+                console.log('Stopping background music at Scene 0');
+            }
+        }
     }
 }
 
@@ -112,32 +130,48 @@ function closePopup() {
     console.log('Popup closed');
 }
 
+// Sound handling functions
+function playDoorSound() {
+    const clickSound = document.querySelector('#click-sound-entity');
+    if (clickSound && clickSound.components && clickSound.components.sound) {
+        try {
+            clickSound.components.sound.stopSound();
+            clickSound.components.sound.playSound();
+            console.log('Playing door sound.');
+        } catch (error) {
+            console.error('Error playing door sound:', error);
+        }
+    }
+}
+
 function playTreeSound() {
     const treeSound = document.querySelector('#tree-sound-entity');
     if (treeSound && treeSound.components && treeSound.components.sound) {
-        treeSound.components.sound.stopSound();
-        treeSound.components.sound.playSound();
+        try {
+            treeSound.components.sound.stopSound();
+            treeSound.components.sound.playSound();
+            console.log('Playing tree sound.');
+        } catch (error) {
+            console.error('Error playing tree sound:', error);
+        }
     }
 }
 
 // Enhanced object click handling
 function handleObjectClick(event) {
-    const target = event.target;
-    console.log('Object clicked:', target.id, target.className);
-    if (target.id === 'villa-door') {
-        const clickSound = document.querySelector('#click-sound-entity');
-        if (clickSound && clickSound.components && clickSound.components.sound) {
-            clickSound.components.sound.stopSound();
-            clickSound.components.sound.playSound();
-            console.log('Playing door click sound.');
-        } else {
-            console.warn('Click sound entity or component not ready.');
-        }
+    const clickedObject = event.target;
+    const objectId = clickedObject.id;
+
+    // Handle door click
+    if (objectId === 'villa-door') {
+        playDoorSound();
         toggleDoor();
-    } else if (target.id === 'tree-plaque') {
+    }
+    // Handle tree click
+    else if (objectId === 'tree-plaque') {
         playTreeSound();
         showPopup('🌳 Project Tree of Growth\n\nThis tree represents your portfolio development! Each fruit symbolizes a project you\'ll create:\n\n🍎 HTML/CSS Static Sites\n🍊 JavaScript Interactive Apps\n🍇 React Components & SPAs\n🍌 Full-Stack Applications\n🥝 Advanced Frameworks\n\nWatch your skills grow with each project!');
-    } else if (target.classList.contains('clickable')) {
+    } else if (clickedObject.classList.contains('clickable')) {
         // Generic clickable object
         showPopup('🎯 Interactive Element\n\nThis object is part of your learning journey. Explore and discover more!');
     }
@@ -299,12 +333,8 @@ document.addEventListener('keydown', function(event) {
     } else if (event.key === 'Escape') {
         closePopup();
     } else if (event.key === 't' || event.key === 'T') {
-        // Tree interaction shortcut
-        const treePlaque = document.querySelector('#tree-plaque');
-        if (treePlaque) {
-            playTreeSound();
-            handleObjectClick({ target: treePlaque });
-        }
+        playTreeSound();
+        showPopup('🌳 Project Tree of Growth\n\nThis tree represents your portfolio development! Each fruit symbolizes a project you\'ll create:\n\n🍎 HTML/CSS Static Sites\n🍊 JavaScript Interactive Apps\n🍇 React Components & SPAs\n🍌 Full-Stack Applications\n🥝 Advanced Frameworks\n\nWatch your skills grow with each project!');
     }
 });
 
